@@ -14,4 +14,8 @@ public class Matrix {
     public Matrix reduce (Matrix matrix) {
         
     }
+    
+    public boolean isReduced() {
+        
+    }
 }
