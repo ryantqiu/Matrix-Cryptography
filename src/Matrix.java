@@ -1,4 +1,3 @@
-import com.sun.javafx.geom.AreaOp.IntOp;
 
 public class Matrix {
     private double[][] matrix;
@@ -29,5 +28,20 @@ public class Matrix {
             }
         }
         return true;
+    }
+    
+    public Matrix multiply(Matrix other) {
+        if (this.m != other.n) {
+            double[][] retDimensions = new double[this.n][other.m];
+            Matrix retMatrix = new Matrix(retDimensions);
+            for (int i = 0; i < other.m; i++) {
+                
+            }
+        }
+    }
+    
+    public Matrix linearTransform(Vector other) {
+        Matrix ret = new Matrix(this.multiply(other).matrix);
+        return ret;
     }
 }
