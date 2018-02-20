@@ -32,16 +32,34 @@ public class Matrix {
     
     public Matrix multiply(Matrix other) {
         if (this.m != other.n) {
-            double[][] retDimensions = new double[this.n][other.m];
-            Matrix retMatrix = new Matrix(retDimensions);
-            for (int i = 0; i < other.m; i++) {
-                
+            throw new IllegalArgumentException("Incompatible matrix dimensions");
+        }
+        double[][] retDimensions = new double[this.n][other.m];
+        Matrix retMatrix = new Matrix(retDimensions);
+        for (int i = 0; i < this.n; i++) { // aRow
+            for (int j = 0; j < other.m; j++) { // bColumn
+                for (int k = 0; k < this.m; k++) { // aColumn
+                    retMatrix.matrix[i][j] += this.matrix[i][k] * other.matrix[k][j];
+                }
             }
         }
+        return retMatrix;
     }
     
     public Matrix linearTransform(Vector other) {
         Matrix ret = new Matrix(this.multiply(other).matrix);
         return ret;
+    }
+    
+    public int getN() {
+        return this.n;
+    }
+    
+    public int getM() {
+        return this.m;
+    }
+    
+    public double[][] getMatrix() {
+        return this.matrix;
     }
 }
