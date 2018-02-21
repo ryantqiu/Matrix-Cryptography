@@ -17,7 +17,7 @@ public class Matrix {
     
     public boolean isReduced() {
         for (int i = 0; i < n; i++) {
-            
+            if ()
         }
     }
     
@@ -36,9 +36,9 @@ public class Matrix {
         }
         double[][] retDimensions = new double[this.n][other.m];
         Matrix retMatrix = new Matrix(retDimensions);
-        for (int i = 0; i < this.n; i++) { // aRow
-            for (int j = 0; j < other.m; j++) { // bColumn
-                for (int k = 0; k < this.m; k++) { // aColumn
+        for (int i = 0; i < this.n; i++) {
+            for (int j = 0; j < other.m; j++) {
+                for (int k = 0; k < this.m; k++) {
                     retMatrix.matrix[i][j] += this.matrix[i][k] * other.matrix[k][j];
                 }
             }
