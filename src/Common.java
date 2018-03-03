@@ -1,12 +1,12 @@
 import Jama.*;
 
 public class Common {
-    public static Matrix messageToMatrix(String msg) {
+    public static Matrix messageToMatrix(String msg, int mtxDim) {
         if(msg == null) {
             throw new IllegalArgumentException("Message can not be null");
         }
-        int matrixWidth = ((msg.length() - 1) / 5) + 1;
-        double[][] msgMtx = new double[5][matrixWidth];
+        int matrixWidth = ((msg.length() - 1) / mtxDim) + 1;
+        double[][] msgMtx = new double[mtxDim][matrixWidth];
         int stringPos = 0;
         for (int i = 0; i < msgMtx.length; i++) {
             for (int j = 0; j < msgMtx[0].length; j++) {

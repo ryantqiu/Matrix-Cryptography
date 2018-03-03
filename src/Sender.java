@@ -1,43 +1,48 @@
 import Jama.Matrix;
 
 public class Sender {
-    private PublicKey publickey;
+    private PublicKey publicKey;
     private Matrix d;
     private Matrix k;
     private Matrix e;
+    private int mtxDim;
     
-    public void setKey(PublicKey publickey) {
-        this.publickey = publickey;
+    public Sender(int mtxDim){
+        this.mtxDim = mtxDim;
+    }
+    
+    public void setKey(PublicKey publicKey) {
+        this.publicKey = publicKey;
         this.k = null;
         this.e = null;
     }
     
     private void generateD() {
-        if(publickey.getG() == null) {
+        if(publicKey.getG() == null) {
             throw new NullPointerException("Public key is missing Matrix 'G'");
         }
-        Matrix g = publickey.getG();
-        Matrix d = Common.modMatrix(publickey.getModulus(), g.times(g));
+        Matrix g = publicKey.getG();
+        Matrix d = Common.modMatrix(publicKey.getModulus(), g.times(g));
         this.d = d;
     }
     
     private void generateK() {
-        if(publickey.getB() == null) {
+        if(publicKey.getB() == null) {
             throw new NullPointerException("Public key is missing Matrix 'K'");
         }
-        Matrix b = publickey.getB();
-        Matrix bd = Common.modMatrix(publickey.getModulus(), b.times(d));
-        Matrix k = Common.modMatrix(publickey.getModulus(), d.times(bd));
+        Matrix b = publicKey.getB();
+        Matrix bd = Common.modMatrix(publicKey.getModulus(), b.times(d));
+        Matrix k = Common.modMatrix(publicKey.getModulus(), d.times(bd));
         this.k = k;
     }
     
     private void generateE() {
-        if(publickey.getA() == null) {
+        if(publicKey.getA() == null) {
             throw new NullPointerException("Public key is missing Matrix 'E'");
         }
-        Matrix a = publickey.getA();
-        Matrix ad = Common.modMatrix(publickey.getModulus(), a.times(d));
-        Matrix e = Common.modMatrix(publickey.getModulus(), d.times(ad));
+        Matrix a = publicKey.getA();
+        Matrix ad = Common.modMatrix(publicKey.getModulus(), a.times(d));
+        Matrix e = Common.modMatrix(publicKey.getModulus(), d.times(ad));
         this.e = e;
     }
     
@@ -45,7 +50,7 @@ public class Sender {
         if(message == null || message.length() == 0) {
             throw new IllegalArgumentException("A message with nonzero length is required");
         }
-        if(publickey == null) {
+        if(publicKey == null) {
             throw new NullPointerException("A public key must be added in order to encrypt a message.");
         }
         if(d == null) {
@@ -57,7 +62,7 @@ public class Sender {
         if(k == null) {
             generateK();
         }
-        Matrix messageMatrix = Common.messageToMatrix(message);
+        Matrix messageMatrix = Common.messageToMatrix(message, mtxDim);
         Matrix encryptedMatrix = k.times(messageMatrix);
         return new EncryptedMessage(encryptedMatrix, e);
     }   
