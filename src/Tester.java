@@ -2,13 +2,14 @@ import Jama.*;
 
 public class Tester {
     public static void main(String[] args) { 
-        Matrix test1 = new Matrix(new double[][]{{1,2,3},{4,7,9},{1,6,2}});
-        Matrix test1Inv = test1.inverse();
-        
-        test1.print(0, 0);
-        test1Inv.print(0, 0);
-        test1.print(0, 0);
-        Matrix id = test1.times(test1Inv);
-        test1.times(id).print(0, 0);
+        Receiver r = new Receiver(15, 5, 4);
+        Sender s = new Sender();
+        PublicKey pubKey = r.createKeyPair();
+        s.setKey(pubKey);
+        EncryptedMessage msg = s.encryptMessage("please work or ill die");
+        msg.getE().print(0, 0);
+        msg.getEncryptedMatrix().print(0, 0);
+        String praying = r.read(msg);
+        System.out.println(praying);
     }
 }

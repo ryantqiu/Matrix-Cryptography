@@ -2,3 +2,7 @@
 /PublicKey.class
 /Receiver.class
 /Message.class
+/sender.class
+/Sender.class
+/Common.class
+/EncryptedMessage.class

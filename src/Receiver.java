@@ -1,45 +1,61 @@
+import java.util.Random;
+
 import Jama.Matrix;
+
 public class Receiver {
     
     private int testModulus;
+    private int mtxDim;
+    private int rank;
     private Matrix privateKey;
     
-    private PublicKey createPublicKey() {
-        
+    public Receiver(int testModulus, int mtxDim, int rank) {
+        this.testModulus = testModulus;
+        this.mtxDim = mtxDim;
+        this.rank = rank;
     }
     
-    private String read(Message) {
-        
-    }
-    
-    
-    private Matrix messageToMatrix(String msg) {
-        int mtxDim = (int) Math.ceil(Math.sqrt(msg.length()));
-        double[][] msgMtx = new double[mtxDim][mtxDim];
-        int stringPos = 0;
-        for (int i = 0; i < msgMtx.length; i++) {
-            for (int j = 0; j < msgMtx[0].length; j++) {
-                if (stringPos >= msg.length()) {
-                    break;
-                } else {
-                    msgMtx[i][j] = msg.charAt(stringPos);
-                    stringPos++;
-                }
-            }
+    public PublicKey createKeyPair() {
+        Matrix a = generateRandomMatrix(rank);
+        privateKey = generateRandomMatrix(rank);
+        while (a.times(privateKey).getArray().equals(privateKey.times(a).getArray())) { // makes sure ac != ca
+            privateKey = generateRandomMatrix(rank);
         }
-        return new Matrix(msgMtx);
+        Matrix g = Common.modMatrix(testModulus, privateKey.times(privateKey)); // makes sure cg == gc
+        Matrix b = Common.modMatrix(testModulus, (privateKey.times(a)).times(privateKey)); // b = cac
+        return new PublicKey(a, b, g, testModulus);
     }
     
-    private Matrix modArray(PublicKey pubKey, Matrix toMod) {
-        double[][] toModArr = toMod.getArray();
-        for (int i = 0; i < toModArr.length; i++) {
-            for (int j = 0; j < toModArr[0].length; j++) {
-                toModArr[i][j] %= pubKey.getModulus();
-            }
+    public String read(EncryptedMessage message) {
+        Matrix decoder = Common.modMatrix(testModulus, (privateKey.times(message.getE())).times(privateKey)).inverse(); // cec^-1
+        Matrix decoded = decoder.times(message.getEncryptedMatrix());
+        return Common.matrixToMessage(decoded);
+    }  
+    
+    private Matrix generateRandomMatrix(int rank) {
+        Random random = new Random();
+        
+        double[][] mtx = new double[mtxDim][mtxDim];
+//        
+//        for (int i = 0; i < rank; i++) {
+//            for (int j = 0; j < mtxDim; j++) {
+//                mtx[i][j] = random.nextInt(testModulus);
+//            }
+//        }
+//        
+//        for (int i = rank; i < mtxDim; i++) {
+//            int randCol = random.nextInt(rank);
+//            int randMultiplier = random.nextInt();
+//            for (int j = 0; j < mtxDim; j++) {
+//                mtx[i][j] = (mtx[randCol][j] * randMultiplier) % testModulus;
+//            }
+//        }
+//        
+//        return new Matrix(mtx).transpose();
+        for (int i = 0; i < mtxDim; i++) {
+            mtx[i][i] = random.nextInt(testModulus - 1) + 1;
         }
-        return new Matrix(toModArr);
+        return new Matrix(mtx).transpose();
     }
-    
-    
 }
 
