@@ -32,8 +32,8 @@ public class Sender {
         }
         Matrix b = publicKey.getB();
         Matrix bd = Common.modMatrix(publicKey.getModulus(), b.times(d));
-        Matrix k = Common.modMatrix(publicKey.getModulus(), d.times(bd));
-        this.k = k;
+        Matrix dbd = Common.modMatrix(publicKey.getModulus(), d.times(bd));
+        this.k = dbd;
     }
     
     private void generateE() {
@@ -42,8 +42,8 @@ public class Sender {
         }
         Matrix a = publicKey.getA();
         Matrix ad = Common.modMatrix(publicKey.getModulus(), a.times(d));
-        Matrix e = Common.modMatrix(publicKey.getModulus(), d.times(ad));
-        this.e = e;
+        Matrix dad = Common.modMatrix(publicKey.getModulus(), d.times(ad));
+        this.e = dad;
     }
     
     public EncryptedMessage encryptMessage(String message) {
