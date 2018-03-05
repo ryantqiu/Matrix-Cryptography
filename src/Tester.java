@@ -25,8 +25,10 @@ public class Tester {
             printMatrix("B", pubKey.getB());
             printMatrix("G", pubKey.getG());
         }
+        
         double[] result = new double[3 * MTXDIM * MTXDIM + 1];
         int curr = 0;
+        
         double[][] a = pubKey.getA().getArray();
         double[][] b = pubKey.getB().getArray();
         double[][] g = pubKey.getG().getArray();
