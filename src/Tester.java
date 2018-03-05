@@ -4,7 +4,7 @@ import Jama.*;
 
 public class Tester {
     
-    public static final int MTXDIM = 6;
+    public static final int MTXDIM = 10;
     public static final int RANK = 4;
     public static boolean PRINTMATRICES = true;
     
@@ -15,7 +15,9 @@ public class Tester {
         //printPublicKey(pubKey);
         s.setKey(pubKey);
         EncryptedMessage msg = s.encryptMessage("please work or ill die");
+        //s.getK().print(0, 0);
         String praying = r.read(msg);
+        Common.modMatrix(pubKey.getModulus(), r.decodar.times(s.getK())).print(0, 0);
         System.out.println(praying);
     }
     

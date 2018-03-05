@@ -28,8 +28,8 @@ public class Common {
         double[][] matrixArray = matrix.getArray();
         String result = "";
         for(int i = 0; i < matrixArray.length; i++) {
-            for(int j = 0; j < matrixArray[i].length; j++) {
-                result = result + (char) matrixArray[i][j];
+            for(int j = 0; j < matrixArray[0].length; j++) {
+                result = result + (char) (matrixArray[i][j] % 127);
             }
         }
         return result;

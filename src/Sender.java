@@ -70,7 +70,12 @@ public class Sender {
             generateK();
         }
         Matrix messageMatrix = Common.messageToMatrix(message, mtxDim);
+        //Matrix encryptedMatrix = Common.modMatrix(publicKey.getModulus(), k.times(messageMatrix));
         Matrix encryptedMatrix = k.times(messageMatrix);
         return new EncryptedMessage(encryptedMatrix, e);
     }   
+    
+    public Matrix getK() {
+        return this.k;
+    }
 }
