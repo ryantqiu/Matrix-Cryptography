@@ -131,7 +131,7 @@ public class Receiver {
         } else
             return new int[0];
     }
-    
+     
 //    public double modInverse(double a, double m)
 //    {
 //        EgcdResult res = new EgcdResult(0, a, m);
