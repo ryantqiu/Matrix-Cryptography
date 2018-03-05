@@ -14,9 +14,11 @@ public class Receiver {
         this.mtxDim = mtxDim;
         this.rank = rank;
         this.random = new Random();
-        int[] primes = generatePrimes(20);
-//        System.err.println(Arrays.toString(primes));
-        modulus = primes[Math.abs(random.nextInt() % primes.length)] * primes[Math.abs(random.nextInt() % primes.length)];
+        int[] primes = generatePrimes(10);
+        System.err.println(Arrays.toString(primes));
+        //modulus = primes[Math.abs(random.nextInt() % primes.length)] * primes[Math.abs(random.nextInt() % primes.length)];
+        modulus = primes[random.nextInt(primes.length / 2) + primes.length / 2] * primes[random.nextInt(primes.length / 2) + primes.length / 2];
+        //random.nextInt(primes.length / 2);
     }
     
     public PublicKey createKeyPair() {

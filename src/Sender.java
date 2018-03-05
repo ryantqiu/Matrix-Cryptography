@@ -1,3 +1,5 @@
+import java.util.Random;
+
 import Jama.Matrix;
 
 public class Sender {
@@ -6,9 +8,11 @@ public class Sender {
     private Matrix k;
     private Matrix e;
     private int mtxDim;
+    private Random random;
     
     public Sender(int mtxDim){
         this.mtxDim = mtxDim;
+        this.random = new Random();
     }
     
     public void setKey(PublicKey publicKey) {
@@ -22,7 +26,10 @@ public class Sender {
             throw new NullPointerException("Public key is missing Matrix 'G'");
         }
         Matrix g = publicKey.getG();
-        Matrix d = Common.modMatrix(publicKey.getModulus(), g.times(g));
+        Matrix d = null;
+        for (int i = 0; i < 2 * (random.nextInt(10) + 1); i++) {
+            d = Common.modMatrix(publicKey.getModulus(), g.times(g));
+        }
         this.d = d;
     }
     
