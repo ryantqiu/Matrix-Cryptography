@@ -14,7 +14,7 @@ public class Receiver {
         this.mtxDim = mtxDim;
         this.rank = rank;
         this.random = new Random();
-        int[] primes = generatePrimes(10);
+        int[] primes = generatePrimes(1000);
         System.err.println(Arrays.toString(primes));
         //modulus = primes[Math.abs(random.nextInt() % primes.length)] * primes[Math.abs(random.nextInt() % primes.length)];
         modulus = primes[random.nextInt(primes.length / 2) + primes.length / 2] * primes[random.nextInt(primes.length / 2) + primes.length / 2];
@@ -27,11 +27,18 @@ public class Receiver {
             a = generateRandomMatrix(rank);
         }
         privateKey = generateRandomMatrix(rank);
-        while (a.times(privateKey).getArray().equals(privateKey.times(a).getArray()) || (privateKey.times(a)).times(privateKey).det() == 0 || gcd((int) privateKey.det(), modulus) != 1) { // makes sure ac != ca
+        while (Common.modMatrix(modulus, a.times(privateKey)).getArray().equals(Common.modMatrix(modulus, privateKey.times(a)).getArray()) || Common.modMatrix(modulus, (privateKey.times(a)).times(privateKey)).det() == 0 || gcd((int) privateKey.det(), modulus) != 1) { // makes sure ac != ca
             privateKey = generateRandomMatrix(rank);
         }
         Matrix b = Common.modMatrix(modulus, (privateKey.times(a)).times(privateKey)); // b = cac
         Matrix g = Common.modMatrix(modulus, privateKey.times(privateKey)); // makes sure cg == gc
+        if(a.det() == 0 || b.det() == 0 || g.det() == 0 || privateKey.det() == 0) {
+            System.out.println("WOAH");
+        }
+        a.print(0, 0);
+        b.print(0, 0);
+        g.print(0, 0);
+        privateKey.print(0, 0);
         return new PublicKey(a, b, g, modulus);
     }
     
