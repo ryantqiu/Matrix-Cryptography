@@ -1,3 +1,4 @@
+import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -28,7 +29,7 @@ public class Receiver {
             a = generateRandomMatrix(rank);
         }
         privateKey = generateRandomMatrix(rank);
-        while (Common.modMatrix(modulus, a.times(privateKey)).getArray().equals(Common.modMatrix(modulus, privateKey.times(a)).getArray()) || Common.modMatrix(modulus, (privateKey.times(a)).times(privateKey)).det() == 0 || gcd((int) privateKey.det(), modulus) != 1) { // makes sure ac != ca
+        while (Common.modMatrix(modulus, a.times(privateKey)).equals(Common.modMatrix(modulus, privateKey.times(a))) || Common.modMatrix(modulus, (privateKey.times(a)).times(privateKey)).det() == 0 || gcd((int) privateKey.det(), modulus) != 1) { // makes sure ac != ca
             privateKey = generateRandomMatrix(rank);
         }
         Matrix b = Common.modMatrix(modulus, (privateKey.times(a)).times(privateKey)); // b = cac
@@ -53,27 +54,18 @@ public class Receiver {
         for (int i = 0; i < mtxDim; i++) {
             mtx[i][i] = 2 + random.nextInt(modulus - 2);
         }
-        return new Matrix(mtx);
+        Matrix m = new Matrix(mtx);
+        if(m.det() == 0) {
+            return generateRandomMatrix(rank);
+        }
+        return m;
     }
     
-    public int gcd(int p, int q) {
-        if (q == 0) return p;
-        if (p == 0) return q;
-
-        // p and q even
-        if ((p & 1) == 0 && (q & 1) == 0) return gcd(p >> 1, q >> 1) << 1;
-
-        // p is even, q is odd
-        else if ((p & 1) == 0) return gcd(p >> 1, q);
-
-        // p is odd, q is even
-        else if ((q & 1) == 0) return gcd(p, q >> 1);
-
-        // p and q odd, p >= q
-        else if (p >= q) return gcd((p-q) >> 1, q);
-
-        // p and q odd, p < q
-        else return gcd(p, (q-p) >> 1);
+    private static int gcd(int a, int b) {
+        BigInteger b1 = BigInteger.valueOf(a);
+        BigInteger b2 = BigInteger.valueOf(b);
+        BigInteger gcd = b1.gcd(b2);
+        return gcd.intValue();
     }
     
     public Matrix invert(Matrix mtx) {
