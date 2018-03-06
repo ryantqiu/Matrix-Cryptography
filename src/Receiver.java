@@ -16,7 +16,7 @@ public class Receiver {
         this.mtxDim = mtxDim;
         this.rank = rank;
         this.random = new Random();
-        int[] primes = generatePrimes(10000);
+        int[] primes = generatePrimes(1000);
         //modulus = primes[Math.abs(random.nextInt() % primes.length)] * primes[Math.abs(random.nextInt() % primes.length)];
         modulus = primes[random.nextInt(primes.length / 2) + primes.length / 2];
         System.out.print(modulus);
@@ -56,7 +56,7 @@ public class Receiver {
         return new Matrix(mtx);
     }
     
-    public static int gcd(int p, int q) {
+    public int gcd(int p, int q) {
         if (q == 0) return p;
         if (p == 0) return q;
 
@@ -134,37 +134,24 @@ public class Receiver {
      
 //    public double modInverse(double a, double m)
 //    {
-//        EgcdResult res = new EgcdResult(0, a, m);
-//        res = gcdExtended(a, m, res);
-//        if (res.gcd != 1) {
+//        if (gcd((int) a, (int) m) == 1) {
 //            throw new IllegalArgumentException();
-//        } else {
-//            // m is added to handle negative x
-//            double result = (res.x % m + m) % m;
-//            return res.x;
 //        }
+//        EgcdResult result = egcd(a, m);
+//        if (result.xIsNegative) {
+//            return m - result.x;
+//        }
+//        return result.x;
 //    }
 //     
-//    // C function for extended Euclidean Algorithm
-//    public EgcdResult gcdExtended(double a, double b, EgcdResult res)
+//    public EgcdResult egcd(double a, double m)
 //    {
-//        // Base Case
-//        if (a == 0)
-//        {
-//            res.x = 0;
-//            res.y = 1;
-//            return res;
+//        int gcd = gcd((int) a, (int) m);
+//        if (m == 0) {
+//            return new EgcdResult(gcd, 1, 0, false);
 //        }
-//     
-//        EgcdResult newRes = new EgcdResult(a, 0, 0); // To store results of recursive call
-//        newRes = gcdExtended(b%a, a, newRes);
-//     
-//        // Update x and y using results of recursive
-//        // call
-//        res.x = newRes.y - (b/a) * newRes.x;
-//        res.y = newRes.x;
-//     
-//        return res;
+//        EgcdResult result = egcd(m, a % m);
+//        return new EgcdResult(gcd, result.y, result.x + ((a / m) * result.y), !result.xIsNegative);
 //    }
 }
 
