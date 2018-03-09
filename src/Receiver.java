@@ -8,14 +8,12 @@ public class Receiver {
     
     private int modulus;
     private int mtxDim;
-    private int rank;
     private Matrix privateKey;
     private Random random;
     public Matrix decodar;
     
     public Receiver(int mtxDim, int rank) {
         this.mtxDim = mtxDim;
-        this.rank = rank;
         this.random = new Random();
         int[] primes = generatePrimes(1000);
         //modulus = primes[Math.abs(random.nextInt() % primes.length)] * primes[Math.abs(random.nextInt() % primes.length)];
@@ -24,13 +22,13 @@ public class Receiver {
     }
     
     public PublicKey createKeyPair() {
-        Matrix a = generateRandomMatrix(rank);
+        Matrix a = generateRandomMatrix();
         while(gcd((int) a.det(), modulus) != 1) {
-            a = generateRandomMatrix(rank);
+            a = generateRandomMatrix();
         }
-        privateKey = generateRandomMatrix(rank);
+        privateKey = generateRandomMatrix();
         while (Common.modMatrix(modulus, a.times(privateKey)).equals(Common.modMatrix(modulus, privateKey.times(a))) || Common.modMatrix(modulus, (privateKey.times(a)).times(privateKey)).det() == 0 || gcd((int) privateKey.det(), modulus) != 1) { // makes sure ac != ca
-            privateKey = generateRandomMatrix(rank);
+            privateKey = generateRandomMatrix();
         }
         Matrix b = Common.modMatrix(modulus, (privateKey.times(a)).times(privateKey)); // b = cac
         Matrix g = null;
@@ -49,14 +47,14 @@ public class Receiver {
         return Common.matrixToMessage(decoded);
     }
     
-    private Matrix generateRandomMatrix(int rank) {        
+    private Matrix generateRandomMatrix() {        
         double[][] mtx = new double[mtxDim][mtxDim];
         for (int i = 0; i < mtxDim; i++) {
             mtx[i][i] = 2 + random.nextInt(modulus - 2);
         }
         Matrix m = new Matrix(mtx);
         if(m.det() == 0) {
-            return generateRandomMatrix(rank);
+            return generateRandomMatrix();
         }
         return m;
     }

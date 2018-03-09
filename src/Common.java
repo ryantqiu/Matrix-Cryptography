@@ -1,4 +1,9 @@
+import java.util.Arrays;
+
+import com.sun.corba.se.spi.orb.StringPair;
+
 import Jama.*;
+import sun.tools.jar.resources.jar;
 
 public class Common {
     public static Matrix messageToMatrix(String msg, int mtxDim) {
@@ -46,5 +51,36 @@ public class Common {
             }
         }
         return new Matrix(toModArr);
+    }
+    
+    public static void printMatrixLinear(Matrix mtx, int mtxDim, String name) {
+        double[][] origMtx = mtx.getArray();
+        double[] mtxPrint = new double[mtxDim * mtxDim];
+        int pos = 0;
+        for (int i = 0; i < mtxDim; i++) {
+            for (int j = 0; j < mtxDim; j++) {
+                mtxPrint[pos] = origMtx[i][j];
+                pos++;
+            }
+        }
+        System.out.println(name + ":");
+        System.out.println(Arrays.toString(mtxPrint));
+    }
+    
+    public static Matrix readMatrixLinear(String mtx, int mtxDim) {
+        double[][] ret = new double[mtxDim][mtxDim];
+        double[] temp = new double[mtxDim * mtxDim];
+        int pos = 0;
+        String[] strNums = mtx.substring(1, mtx.length() - 1).split(",");
+        for (int i = 0; i < strNums.length; i++) {
+            temp[i] = Double.parseDouble(strNums[i]);
+        }
+        for (int j = 0; j < mtxDim; j++) {
+            for (int k = 0; k < mtxDim; k++) {
+                ret[j][k] = temp[pos];
+                pos++;
+            }
+        }
+        return new Matrix(ret);
     }
 }

@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.Scanner;
 
 import Jama.*;
 
@@ -12,20 +13,23 @@ public class Tester {
         Receiver r = new Receiver(MTXDIM, RANK);
         Sender s = new Sender(MTXDIM);
         PublicKey pubKey = r.createKeyPair();
-        printPublicKey(pubKey);
+        //printPublicKey(pubKey);
         s.setKey(pubKey);
-        EncryptedMessage msg = s.encryptMessage("please work or ill die");
-        System.out.println("K Matrix:");
-        s.getK().print(0, 0);
-        System.out.println("E Matrix:");
-        msg.getE().print(0, 0);
-        System.out.println("Encrypted Message Matrix:");
-        msg.getEncryptedMatrix().print(0, 0);
-        System.out.println("Encrypted Message:");
-        System.out.println(Common.matrixToMessage(msg.getEncryptedMatrix()));
-        String praying = r.read(msg);
-        Common.modMatrix(pubKey.getModulus(), r.decodar.times(s.getK())).print(0, 0);
-        System.out.println(praying);
+//        System.out.print("Enter a string to encrypt: ");
+//        EncryptedMessage msg = s.encryptMessage(new Scanner(System.in).nextLine());
+//        System.out.println("K Matrix:");
+//        s.getK().print(0, 0);
+//        System.out.println("E Matrix:");
+//        msg.getE().print(0, 0);
+//        System.out.println("Encrypted Message Matrix:");
+//        msg.getEncryptedMatrix().print(0, 0);
+//        System.out.println("Encrypted Message:");
+//        System.out.println(Common.matrixToMessage(msg.getEncryptedMatrix()));
+//        String praying = r.read(msg);
+//        Common.modMatrix(pubKey.getModulus(), r.decodar.times(s.getK())).print(0, 0);
+//        System.out.println(praying);
+        pubKey.getA().print(0, 0);
+        Common.printMatrixLinear(pubKey.getA(), MTXDIM, "A");
     }
     
     public static double[] printPublicKey(PublicKey pubKey) {
