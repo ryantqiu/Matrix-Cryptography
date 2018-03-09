@@ -28,7 +28,6 @@ public class Tester {
 //        Common.modMatrix(pubKey.getModulus(), r.decodar.times(s.getK())).print(0, 0);
 //        System.out.println(praying);
         pubKey.getA().print(0, 0);
-        Common.printMatrixLinear(pubKey.getA(), MTXDIM);
     }
     
     public static double[] printPublicKey(PublicKey pubKey) {

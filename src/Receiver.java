@@ -41,8 +41,8 @@ public class Receiver {
     public String read(EncryptedMessage message) {
         Matrix decoder = Common.modMatrix(modulus, (privateKey.times(message.getE())).times(privateKey)); // cec
         //decoder.print(0, 0);
-        decoder = invert(decoder);
         decodar = decoder;
+        decoder = invert(decoder);
         Matrix decoded = Common.modMatrix(modulus, decoder.times(message.getEncryptedMatrix()));
         return Common.matrixToMessage(decoded);
     }
