@@ -73,7 +73,11 @@ public class Sender {
         //Matrix encryptedMatrix = Common.modMatrix(publicKey.getModulus(), k.times(messageMatrix));
         Matrix encryptedMatrix = k.times(messageMatrix);
         return new EncryptedMessage(encryptedMatrix, e);
-    }   
+    }
+    
+    public Matrix getD() {
+        return this.d;
+    }
     
     public Matrix getK() {
         return this.k;

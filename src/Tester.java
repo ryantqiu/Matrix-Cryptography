@@ -6,11 +6,10 @@ import Jama.*;
 public class Tester {
     
     public static final int MTXDIM = 10;
-    public static final int RANK = 4;
     public static boolean PRINTMATRICES = true;
     
     public static void main(String[] args) { 
-        Receiver r = new Receiver(MTXDIM, RANK);
+        Receiver r = new Receiver(MTXDIM);
         Sender s = new Sender(MTXDIM);
         PublicKey pubKey = r.createKeyPair();
         //printPublicKey(pubKey);
@@ -29,7 +28,7 @@ public class Tester {
 //        Common.modMatrix(pubKey.getModulus(), r.decodar.times(s.getK())).print(0, 0);
 //        System.out.println(praying);
         pubKey.getA().print(0, 0);
-        Common.printMatrixLinear(pubKey.getA(), MTXDIM, "A");
+        Common.printMatrixLinear(pubKey.getA(), MTXDIM);
     }
     
     public static double[] printPublicKey(PublicKey pubKey) {

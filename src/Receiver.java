@@ -12,13 +12,13 @@ public class Receiver {
     private Random random;
     public Matrix decodar;
     
-    public Receiver(int mtxDim, int rank) {
+    public Receiver(int mtxDim) {
         this.mtxDim = mtxDim;
         this.random = new Random();
         int[] primes = generatePrimes(1000);
         //modulus = primes[Math.abs(random.nextInt() % primes.length)] * primes[Math.abs(random.nextInt() % primes.length)];
         modulus = primes[random.nextInt(primes.length / 2) + primes.length / 2];
-        System.out.print(modulus);
+        //System.out.print(modulus);
     }
     
     public PublicKey createKeyPair() {

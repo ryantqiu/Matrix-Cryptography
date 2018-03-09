@@ -53,7 +53,7 @@ public class Common {
         return new Matrix(toModArr);
     }
     
-    public static void printMatrixLinear(Matrix mtx, int mtxDim, String name) {
+    public static void printMatrixLinear(Matrix mtx, int mtxDim) {
         double[][] origMtx = mtx.getArray();
         double[] mtxPrint = new double[mtxDim * mtxDim];
         int pos = 0;
@@ -63,7 +63,6 @@ public class Common {
                 pos++;
             }
         }
-        System.out.println(name + ":");
         System.out.println(Arrays.toString(mtxPrint));
     }
     
