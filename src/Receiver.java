@@ -122,7 +122,7 @@ public class Receiver {
             return primes;
         } else
             return new int[0];
-    }
+    } 
      
 //    public double modInverse(double a, double m)
 //    {
